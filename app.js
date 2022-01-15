@@ -12,7 +12,6 @@ const TwitterStrategy = require("passport-twitter").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 
 
-
 const app = express();
 
 app.set('view engine', 'ejs');
