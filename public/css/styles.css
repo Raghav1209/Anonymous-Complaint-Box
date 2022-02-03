@@ -18,3 +18,7 @@ body {
 .cardbody{
   margin: 25px auto;
 }
+
+.logo{
+  height: 150px;
+}
