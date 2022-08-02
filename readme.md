@@ -56,3 +56,7 @@ Visit (http://www.passportjs.org/packages/)
 
     npm install passport-github2
 
+### Passport-Twitter
+(https://www.passportjs.org/packages/passport-twitter/)
+
+    npm install passport-twitter
