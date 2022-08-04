@@ -7,6 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const GithubStrategy = require('passport-github2').Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
@@ -41,6 +42,7 @@ const userSchema = new mongoose.Schema({
   googleId: String,
   githubId: String,
   twitterId: String,
+  facebookId: String,
   secrets: [secretSchema]
 });
 
@@ -77,6 +79,18 @@ passport.use(new GoogleStrategy({
       return cb(err, user);
     });
   }
+));
+
+passport.use(new FacebookStrategy({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/facebook/Anonymous-complaint-box"
+},
+function(accessToken, refreshToken, profile, cb) {
+  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    return cb(err, user);
+  });
+}
 ));
 
 passport.use(new GithubStrategy({
@@ -117,6 +131,16 @@ app.get('/auth/github',
 
 app.get('/auth/twitter',
   passport.authenticate('twitter'));
+
+app.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/auth/facebook/Anonymous-complaint-box',
+passport.authenticate('facebook', { failureRedirect: '/login' }),
+function(req, res) {
+  // Successful authentication, redirect home.
+  res.redirect('/secrets');
+});
 
 
 app.get("/auth/google/secrets",
