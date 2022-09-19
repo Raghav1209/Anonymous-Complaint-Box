@@ -30,7 +30,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/userDB");
+// mongoose.connect("mongodb+srv://raghav0403:<password>@cluster0.f11fl.mongodb.net/?retryWrites=true&w=majority/userDB");
+mongoose.connect(`mongodb+srv://raghav0403:${process.env.DB_PASSWORD}@cluster0.f11fl.mongodb.net/userDB`);
+
 
 const secretSchema = new mongoose.Schema({
   secret : String
@@ -75,7 +77,7 @@ passport.use(new GoogleStrategy({
 },
   function (accessToken, refreshToken, profile, cb) {
     //   console.log(profile);
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    User.findOrCreate({ googleId: profile.id,username:profile.id}, function (err, user) {
       return cb(err, user);
     });
   }
@@ -87,7 +89,7 @@ passport.use(new FacebookStrategy({
   callbackURL: "http://localhost:3000/auth/facebook/Anonymous-complaint-box"
 },
 function(accessToken, refreshToken, profile, cb) {
-  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+  User.findOrCreate({ facebookId: profile.id,username:profile.id}, function (err, user) {
     return cb(err, user);
   });
 }
@@ -100,7 +102,7 @@ passport.use(new GithubStrategy({
 },
   function (accessToken, refreshToken, profile, done) {
     console.log(profile);
-    User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    User.findOrCreate({ githubId: profile.id,username:profile.id}, function (err, user) {
       return done(err, user);
     });
   }
@@ -112,8 +114,8 @@ passport.use(new TwitterStrategy({
   callbackURL: "http://localhost:3000/auth/twitter/Raghav0403"
 },
   function (token, tokenSecret, profile, cb) {
-    // console.log(profile);
-    User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+    console.log(profile);
+    User.findOrCreate({ twitterId: profile.id,username:profile.id}, function (err, user) {
       return cb(err, user);
     });
   }

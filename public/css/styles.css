@@ -8,11 +8,23 @@ body {
     text-align: center;
 }
 
+/* .secret_container{
+  display: flex;
+    flex-direction: row;
+} */
+
 .secret-text {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #fff;
-  background-color: #000;
+  padding: 12px 28px;
+  border-radius: 19px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 40%);
+  background-color: #4d4f52;
+}
+
+.submit_btn{
+  background-color: #383c41;
 }
 
 .cardbody{
@@ -22,3 +34,25 @@ body {
 .logo{
   height: 150px;
 }
+
+
+.login_btn{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* @media screen and (max-width: 995px) {
+  .login_btn{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    margin-top: 74px;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  
+} */
